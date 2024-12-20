@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    function limitDescription(textarea, maxLength, characterCountElement) {
+      if (textarea.value.length > maxLength) {
+        textarea.value = textarea.value.substring(0, maxLength);
+        alert("Description cannot exceed " + maxLength + " characters.");
+      }
+      characterCountElement.textContent = `${textarea.value.length}/${maxLength}`;
+    }
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create New Book</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(to right, #89CFF0, #FF99CC); /* Soft gradient with pastel violet */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .book-form {
+      width: 500px;
+      padding: 30px;
+      border-radius: 15px;
+      background-color: #cb99c9;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .book-form:hover {
+      transform: scale(1.03);
+    }
+
+    .book-form h4 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
+    .btn-primary {
+      background-color: #e67e22;
+      border-color: #e67e22;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.02);
+    }
+
+    .errorlist {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <form method="post" enctype="multipart/form-data" class="book-form">
+    {% csrf_token %}
+    <h4>Create New Book</h4>
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="message {{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <div class="form-group">
+      <label for="id_title" class="form-label">Title</label>
+      <input type="text" class="form-control" id="id_title" name="title" value="{{ form.title.value|default:'' }}" required>
+      <span class="errorlist">{{ form.title.errors }}</span>
+    </div>
+    <div class="form-group">
+      <label for="id_author" class="form-label">Author</label>
+      <input type="text" class="form-control" id="id_author" name="author" value="{{ form.author.value|default:'' }}" required>
+      <span class="errorlist">{{ form.author.errors }}</span>
+    </div>
+    <div class="form-group">
+      <label for="id_description" class="form-label">Description</label>
+      <textarea class="form-control" id="id_description" name="description" rows="3" maxlength="300" onkeyup="limitDescription(this, 300, character_count)">{{ form.description.value|default:'' }}</textarea>
+      <span id="character_count">0/300</span>
+      <span class="errorlist">{{ form.description.errors }}</span>
+    </div>
+    <div class="form-group">
+      <label for="id_published_date" class="form-label">Published Date (DD/MM/YYYY)</label>
+      <input type="date" class="form-control" id="id_published_date" name="published_date" required>
+      <span class="errorlist">{{ form.published_date.errors }}</span>
+    </div>
+    <div class="form-group">
+      <label for="id_isbn" class="form-label">ISBN</label>
+      <input type="text" class="form-control" id="id_isbn" name="isbn" required>
+      <span class="errorlist">{{ form.isbn.errors }}</span>
+    </div>
+    <div class="form-group">
+      <label for="id_image" class="form-label">Upload Image (Optional)</label>
+      <input type="file" class="form-control" id="id_image" name="image">
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">Create Book</button>
+    </div>
+  </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVFQWcD+H46MHuOLyN5zW8oK9UxmZ2383bHRqnAlquilVWvLwQ6" crossorigin="anonymous"></script>
+</body>
+</html>

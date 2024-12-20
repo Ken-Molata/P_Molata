@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home - Book Manager</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <style>
+    body {
+      display: absolute;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(to right, #89CFF0, #FF99CC); /* Soft gradient with pastel violet */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .book-list-container {
+      background: linear-gradient(to right, #DDA0DD, #e6b0ff); /* Pastel pink violet gradient */
+      padding: 200px;
+      border-radius: 200px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      /* Prevent dragging within this container */
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+
+    /* ... other styles for cards, buttons, etc. */
+  </style>
+</head>
+<body>
+  <div class="book-list-container">
+    {% extends 'myapp/base.html' %}
+
+    {% block content %}
+      <div class="container mt-5">
+        <div class="card shadow" style="background: linear-gradient(to right, #f098ff, #ffd700); border-radius: 20px; animation: fadeIn 1s ease-in-out;">
+          <div class="card-body">
+            <h1 class="card-title text-center" style="color: #333333;">Welcome to Your Personal Book Haven</h1>
+            <p class="card-text text-center" style="color: #666666;">Discover, organize, and cherish your literary world.</p>
+            <div class="d-flex justify-content-center">
+              <a href="{% url 'book_create' %}" class="btn btn-primary btn-lg mx-2 transition-button" style="background-color: #FFD700; border-color: #FFD700;">Add a New Book</a>
+              <a href="{% url 'book_list' %}" class="btn btn-secondary btn-lg mx-2 transition-button" style="background-color: #333333; border-color: #333333; color: #fff;">View Your Book Collection</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endblock %}
+
+    <style>
+      .transition-button {
+        transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+      }
+
+      .transition-button:hover {
+        transform: scale(1.05);
+        background-color: #ddd;
+      }
+
+      .card {
+        animation: fadeIn 1s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+    </style>
+  </div>
+</body>
+</html>
